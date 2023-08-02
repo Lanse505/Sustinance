@@ -35,6 +35,9 @@ public class ImplDrinkableData implements DrinkableData {
     }
 
     @Override
+    public void onConsume() {}
+
+    @Override
     public CompoundTag serializeNBT() {
         CompoundTag drinkableData = new CompoundTag();
         drinkableData.putInt("thirstModifier", this.thirstModifier);

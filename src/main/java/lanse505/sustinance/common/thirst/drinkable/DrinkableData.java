@@ -14,4 +14,6 @@ public interface DrinkableData extends INBTSerializable<CompoundTag> {
     float getHydrationModifier();
     float getHydrationModifier(@Nullable LivingEntity consumer);
 
+    void onConsume();
+
 }

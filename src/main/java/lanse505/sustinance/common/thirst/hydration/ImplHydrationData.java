@@ -33,8 +33,10 @@ public class ImplHydrationData implements HydrationData {
 
     @Override
     public void drink(Item consumable, ItemStack stack, @Nullable LivingEntity consumer) {
-        if (consumable instanceof DrinkableData drinkableData) {
-            this.drink(drinkableData.getThirstModifier(consumer), drinkableData.getHydrationModifier(consumer));
+        if (HydrationHelper.isDrinkable(stack)) {
+            DrinkableData drinkable = HydrationHelper.getDrinkableData(stack).orElseThrow(() -> new IllegalArgumentException("Um... What?"));
+            this.drink(drinkable.getThirstModifier(consumer), drinkable.getHydrationModifier(consumer));
+            drinkable.onConsume();
         }
     }
 
