@@ -32,6 +32,9 @@ import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
+// TODO: Finish Thirst/Hydration system
+// TODO: Finish the Water-type system
+// TODO: Finish Dimension Thirst/Hydration modifiers
 @Mod(Sustinance.MODID)
 public class Sustinance {
 

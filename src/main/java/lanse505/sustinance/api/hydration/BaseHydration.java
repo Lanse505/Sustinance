@@ -36,7 +36,7 @@ public class BaseHydration implements Hydration {
     public void drink(Item consumable, ItemStack stack, @Nullable LivingEntity consumer) {
         if (consumable instanceof Drinkable) {
             Drinkable drinkable = HydrationHelper.getDrinkableData(stack);
-            this.drink(drinkable.getThirstModifier(consumer), drinkable.getHydrationModifier(consumer));
+            this.drink(drinkable.getThirstModifier(stack), drinkable.getHydrationModifier(stack));
         }
     }
 

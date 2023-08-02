@@ -10,10 +10,10 @@ import javax.annotation.Nullable;
 public interface Drinkable {
 
     int getThirstModifier();
-    int getThirstModifier(@Nullable LivingEntity consumer);
+    int getThirstModifier(@Nullable ItemStack consumed);
 
     float getHydrationModifier();
-    float getHydrationModifier(@Nullable LivingEntity consumer);
+    float getHydrationModifier(@Nullable ItemStack consumed);
 
     void onConsume(ItemStack consumed, Level level, Player consumer);
 

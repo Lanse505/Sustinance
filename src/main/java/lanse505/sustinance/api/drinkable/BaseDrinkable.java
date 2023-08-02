@@ -24,7 +24,7 @@ public class BaseDrinkable implements Drinkable {
     }
 
     @Override
-    public int getThirstModifier(@Nullable LivingEntity consumer) {
+    public int getThirstModifier(@Nullable ItemStack consumed) {
         return getThirstModifier();
     }
 
@@ -34,7 +34,7 @@ public class BaseDrinkable implements Drinkable {
     }
 
     @Override
-    public float getHydrationModifier(@Nullable LivingEntity consumer) {
+    public float getHydrationModifier(@Nullable ItemStack consumed) {
         return getHydrationModifier();
     }
 
