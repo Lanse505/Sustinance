@@ -1,0 +1,30 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            name = 'MinecraftForge'
+            url = 'https://maven.minecraftforge.net/'
+        }
+        maven {
+            name = 'Mixins'
+            url = 'https://repo.spongepowered.org/maven/'
+        }
+        maven {
+            name = 'Parchment'
+            url = 'https://maven.parchmentmc.org'
+        }
+    }
+
+    resolutionStrategy.eachPlugin {
+        if (requested.id.id == 'org.spongepowered.mixin')
+            useModule group: 'org.spongepowered', name: 'mixingradle', version: requested.version
+        if (requested.id.id == 'org.parchmentmc')
+            useModule group: 'org.parchmentmc', name: 'librarian', version: requested.version
+    }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+}
+
+rootProject.name = 'Sustinance'
