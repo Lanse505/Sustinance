@@ -19,6 +19,10 @@ public class HydrationTickHandler {
         }
     }
 
+    /**
+     * This method is very much inspired by parts of {@linkplain net.minecraft.world.food.FoodData#tick(Player)}
+     * @param player the Player to handle the thirst of.
+     */
     public static void handleThirst(Player player) {
         Hydration thirst = player.getCapability(SustinanceCapabilities.HYDRATION).orElseThrow(() -> new IllegalArgumentException("Hydration Cap was Null!"));
         if (thirst instanceof BaseHydration data) {

@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
-public class ItemDrink extends Item {
+public abstract class ItemDrink extends Item {
 
     @Nonnull
     private final Drinkable drinkable;
@@ -53,20 +53,45 @@ public class ItemDrink extends Item {
         if (!level.isClientSide() && livingEntity instanceof Player player) {
            Hydration hydration = HydrationHelper.getHydrationData(player);
            hydration.drink(this, stack, player);
-           drinkable.onConsume();
+           onConsume(drinkable, stack, level, player);
            return this.getCraftingRemainingItem(stack);
         }
         return super.finishUsingItem(stack, level, livingEntity);
     }
 
+
     /**
-     *
-     * @param stack
-     * @return
+     * Used to trigger additional effects when the drink is consumed.
+     * <p>
+     * You can either override this on your item or build in the behaviour as part of the onConsume method of your {@linkplain Drinkable} implementation.
+     * @param drinkable the {@linkplain Drinkable} reference object.
+     * @param stack the {@linkplain ItemStack} being used.
+     * @param level the {@linkplain Level} that the item is being consumed in.
+     * @param player the {@linkplain Player} consuming the item.
+     */
+    public void onConsume(Drinkable drinkable, ItemStack stack, Level level, Player player) {
+        drinkable.onConsume(stack, level, player);
+    }
+
+    /**
+     * Override this method to change the Use-Duration of your drink item.
+     * @param stack the {@linkplain ItemStack} to use for reference for the Use-duration.
+     * @return returns the Use-duration in ticks.
      */
     @Override
     public int getUseDuration(ItemStack stack) {
         return 32;
+    }
+
+    /**
+     * Player-sensitive version of {@linkplain #getUseDuration(ItemStack)}
+     * Defaults to calling: {@linkplain #getUseDuration(ItemStack)}
+     * @param player the {@linkplain Player} that's using the item.
+     * @param stack the {@linkplain ItemStack} to use for reference for the Use-duration
+     * @return returns the Use-duration in ticks.
+     */
+    public int getUseDuration(Player player, ItemStack stack) {
+        return getUseDuration(stack);
     }
 
     /**
@@ -77,5 +102,14 @@ public class ItemDrink extends Item {
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
         return UseAnim.DRINK;
+    }
+
+    /**
+     * Used to get the {@linkplain Drinkable} reference object.
+     * @return returns the {@linkplain Drinkable} reference object.
+     */
+    @Nonnull
+    public Drinkable getDrinkable() {
+        return drinkable;
     }
 }

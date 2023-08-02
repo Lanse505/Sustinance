@@ -3,6 +3,7 @@ package lanse505.sustinance.api.hydration;
 import lanse505.sustinance.api.drinkable.Drinkable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -36,7 +37,6 @@ public class BaseHydration implements Hydration {
         if (consumable instanceof Drinkable) {
             Drinkable drinkable = HydrationHelper.getDrinkableData(stack);
             this.drink(drinkable.getThirstModifier(consumer), drinkable.getHydrationModifier(consumer));
-            drinkable.onConsume();
         }
     }
 

@@ -3,6 +3,7 @@ package lanse505.sustinance.api.hydration;
 import lanse505.sustinance.api.SustinanceCapabilities;
 import lanse505.sustinance.api.drinkable.BaseDrinkable;
 import lanse505.sustinance.api.drinkable.Drinkable;
+import lanse505.sustinance.api.item.ItemDrink;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
@@ -24,7 +25,13 @@ public class HydrationHelper {
      * @return returns the {@linkplain Drinkable} interface object from the {@linkplain ItemStack}.
      */
     public static Drinkable getDrinkableData(ItemStack drinkable) {
-        return isDrinkable(drinkable) ? (Drinkable) drinkable.getItem() : BaseDrinkable.NULL;
+        if (isDrinkable(drinkable)) {
+            if (drinkable.getItem() instanceof Drinkable) {
+                return isDrinkable(drinkable) ? (Drinkable) drinkable.getItem() : BaseDrinkable.NULL;
+            }
+            return ((ItemDrink) drinkable.getItem()).getDrinkable();
+        }
+        return BaseDrinkable.NULL;
     }
 
     /**
@@ -33,7 +40,7 @@ public class HydrationHelper {
      * @return returns whether the provided {@linkplain ItemStack} is an instance of the {@linkplain Drinkable} interface.
      */
     public static boolean isDrinkable(ItemStack stack) {
-        return !stack.isEmpty() && stack.getItem() instanceof Drinkable;
+        return !stack.isEmpty() && (stack.getItem() instanceof Drinkable || stack.getItem() instanceof ItemDrink);
     }
 
     /**
