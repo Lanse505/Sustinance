@@ -1,6 +1,8 @@
-package lanse505.sustinance.common.thirst.hydration;
+package lanse505.sustinance.common.handlers;
 
-import lanse505.sustinance.common.SustinanceCapabilities;
+import lanse505.sustinance.api.SustinanceCapabilities;
+import lanse505.sustinance.api.hydration.BaseHydration;
+import lanse505.sustinance.api.hydration.Hydration;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
@@ -18,18 +20,18 @@ public class HydrationTickHandler {
     }
 
     public static void handleThirst(Player player) {
-        HydrationData thirst = player.getCapability(SustinanceCapabilities.HYDRATION).orElseThrow(() -> new IllegalArgumentException("Hydration Cap was Null!"));
-        if (thirst instanceof ImplHydrationData data) {
+        Hydration thirst = player.getCapability(SustinanceCapabilities.HYDRATION).orElseThrow(() -> new IllegalArgumentException("Hydration Cap was Null!"));
+        if (thirst instanceof BaseHydration data) {
             Difficulty difficulty = player.level().getDifficulty();
             float exhaustion = player.getFoodData().getExhaustionLevel();
             if (exhaustion > 4.0F) {
-                if (data.getHydrationLevel() > ImplHydrationData.MIN_HYDRATION) {
+                if (data.getHydrationLevel() > BaseHydration.MIN_HYDRATION) {
                     data.addHydration(-1.0f);
                 } else if (difficulty != Difficulty.PEACEFUL) {
                     data.addThirst(-1);
                 }
             }
-            if (data.getThirst() <= ImplHydrationData.MIN_THIRST) {
+            if (data.getThirst() <= BaseHydration.MIN_THIRST) {
                 if ((data.getThirst() > 10.0F || difficulty == Difficulty.HARD || data.getThirst() > 1.0F && difficulty == Difficulty.NORMAL)) {
                     player.hurt(player.damageSources().starve(), 1.0F);
                 }

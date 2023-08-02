@@ -1,4 +1,4 @@
-package lanse505.sustinance.common.thirst.hydration;
+package lanse505.sustinance.api.hydration;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -7,13 +7,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.Nullable;
 
-public interface HydrationData extends INBTSerializable<CompoundTag> {
+public interface Hydration extends INBTSerializable<CompoundTag> {
 
     /**
      * {@linkplain LivingEntity}-agnostic version of {@link #drink(Item, ItemStack, LivingEntity)}.
      * <p>
      * Used for handling "drinking" without a {@linkplain LivingEntity}-context.
-     * @param thirstLevelModifier the modifier for the thirst level.
+     *
+     * @param thirstLevelModifier    the modifier for the thirst level.
      * @param hydrationLevelModifier the modifier for the hydration level.
      */
     void drink(int thirstLevelModifier, float hydrationLevelModifier);

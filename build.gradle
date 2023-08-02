@@ -101,7 +101,7 @@ tasks.named('processResources', ProcessResources).configure {
             "mixin_version": mixinVersion
     ]
     inputs.properties replaceProperties
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta', "${project.modId}.mixins.json"]) {
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta', "sustinance.mixins.json"]) {
         expand replaceProperties + [project: project]
     }
 }

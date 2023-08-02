@@ -1,7 +1,8 @@
-package lanse505.sustinance.common.thirst.hydration;
+package lanse505.sustinance.api.hydration;
 
-import lanse505.sustinance.common.SustinanceCapabilities;
-import lanse505.sustinance.common.thirst.drinkable.DrinkableData;
+import lanse505.sustinance.api.SustinanceCapabilities;
+import lanse505.sustinance.api.drinkable.BaseDrinkable;
+import lanse505.sustinance.api.drinkable.Drinkable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
@@ -13,26 +14,26 @@ public class HydrationHelper {
      * @param player the {@linkplain Player} to obtain thirst data from.
      * @return returns the {@linkplain LazyOptional} capability object from the {@linkplain Player}
      */
-    public static HydrationData getHydrationData(Player player) {
+    public static Hydration getHydrationData(Player player) {
         return player.getCapability(SustinanceCapabilities.HYDRATION).orElseThrow(() -> new IllegalArgumentException("Hydration Cap was Null!"));
     }
 
     /**
-     * Attempts to obtain the {@linkplain LazyOptional} capability object from the {@linkplain ItemStack}.
-     * @param drinkable the {@linkplain ItemStack} to attempt to grab the Drinkable capability from.
-     * @return returns the {@linkplain LazyOptional} capability object from the {@linkplain ItemStack}.
+     * Attempts to grab the {@linkplain Drinkable} interface object from the {@linkplain ItemStack}.
+     * @param drinkable the {@linkplain ItemStack} to attempt to grab the {@linkplain Drinkable} interface from.
+     * @return returns the {@linkplain Drinkable} interface object from the {@linkplain ItemStack}.
      */
-    public static LazyOptional<DrinkableData> getDrinkableData(ItemStack drinkable) {
-        return drinkable.getCapability(SustinanceCapabilities.DRINKABLE);
+    public static Drinkable getDrinkableData(ItemStack drinkable) {
+        return isDrinkable(drinkable) ? (Drinkable) drinkable.getItem() : BaseDrinkable.NULL;
     }
 
     /**
-     * Checks whether the provided {@linkplain ItemStack} has the {@linkplain DrinkableData} capability attached.
+     * Checks whether the provided {@linkplain ItemStack} is an instance of the {@linkplain Drinkable} interface.
      * @param stack the {@linkplain ItemStack} to query against.
-     * @return returns whether the provided {@linkplain ItemStack} has the {@linkplain DrinkableData} capability attached.
+     * @return returns whether the provided {@linkplain ItemStack} is an instance of the {@linkplain Drinkable} interface.
      */
     public static boolean isDrinkable(ItemStack stack) {
-        return getDrinkableData(stack).isPresent();
+        return !stack.isEmpty() && stack.getItem() instanceof Drinkable;
     }
 
     /**

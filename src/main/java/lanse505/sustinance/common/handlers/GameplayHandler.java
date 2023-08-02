@@ -1,6 +1,6 @@
-package lanse505.sustinance.common;
+package lanse505.sustinance.common.handlers;
 
-import lanse505.sustinance.common.thirst.hydration.HydrationHelper;
+import lanse505.sustinance.api.hydration.HydrationHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;

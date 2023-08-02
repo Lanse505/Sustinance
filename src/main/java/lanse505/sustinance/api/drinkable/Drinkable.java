@@ -1,12 +1,10 @@
-package lanse505.sustinance.common.thirst.drinkable;
+package lanse505.sustinance.api.drinkable;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nullable;
 
-public interface DrinkableData extends INBTSerializable<CompoundTag> {
+public interface Drinkable {
 
     int getThirstModifier();
     int getThirstModifier(@Nullable LivingEntity consumer);

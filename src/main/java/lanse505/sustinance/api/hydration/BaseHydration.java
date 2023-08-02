@@ -1,13 +1,13 @@
-package lanse505.sustinance.common.thirst.hydration;
+package lanse505.sustinance.api.hydration;
 
-import lanse505.sustinance.common.thirst.drinkable.DrinkableData;
+import lanse505.sustinance.api.drinkable.Drinkable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-public class ImplHydrationData implements HydrationData {
+public class BaseHydration implements Hydration {
 
     public static final int MAX_THIRST = 20;
     public static final int MIN_THIRST = 0;
@@ -20,7 +20,7 @@ public class ImplHydrationData implements HydrationData {
     private float hydrationLevel;
 
 
-    public ImplHydrationData() {
+    public BaseHydration() {
         this.hydrationLevel = 5.0f;
     }
 
@@ -33,8 +33,8 @@ public class ImplHydrationData implements HydrationData {
 
     @Override
     public void drink(Item consumable, ItemStack stack, @Nullable LivingEntity consumer) {
-        if (HydrationHelper.isDrinkable(stack)) {
-            DrinkableData drinkable = HydrationHelper.getDrinkableData(stack).orElseThrow(() -> new IllegalArgumentException("Um... What?"));
+        if (consumable instanceof Drinkable) {
+            Drinkable drinkable = HydrationHelper.getDrinkableData(stack);
             this.drink(drinkable.getThirstModifier(consumer), drinkable.getHydrationModifier(consumer));
             drinkable.onConsume();
         }
