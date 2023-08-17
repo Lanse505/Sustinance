@@ -1,4 +1,4 @@
-package lanse505.sustinance.api.hydration;
+package lanse505.sustinance.api.sustinance.hydration;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -7,6 +7,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.Nullable;
 
+// TODO: Finish Thirst/Hydration system
+// TODO: Finish the Water-type system
+// TODO: Finish Dimension Thirst/Hydration modifiers
 public interface Hydration extends INBTSerializable<CompoundTag> {
 
     /**
@@ -75,6 +78,8 @@ public interface Hydration extends INBTSerializable<CompoundTag> {
      * @param thirst the new thirst-level to replace the old one.
      */
     void setThirst(int thirst);
+
+    void setLastThirst(int lastThirst);
 
     /**
      * @param hydration the new hydration-level to replace the old one.

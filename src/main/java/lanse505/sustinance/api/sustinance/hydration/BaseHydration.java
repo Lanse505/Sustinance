@@ -1,9 +1,12 @@
-package lanse505.sustinance.api.hydration;
+package lanse505.sustinance.api.sustinance.hydration;
 
+import lanse505.sustinance.Sustinance;
 import lanse505.sustinance.api.drinkable.Drinkable;
+import lanse505.sustinance.api.sustinance.SustinanceHelper;
+import lanse505.sustinance.common.network.packets.ClientboundUpdateHydrationDataPacket;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
@@ -22,6 +25,7 @@ public class BaseHydration implements Hydration {
 
 
     public BaseHydration() {
+        this.thirst = MAX_THIRST;
         this.hydrationLevel = 5.0f;
     }
 
@@ -35,8 +39,11 @@ public class BaseHydration implements Hydration {
     @Override
     public void drink(Item consumable, ItemStack stack, @Nullable LivingEntity consumer) {
         if (consumable instanceof Drinkable) {
-            Drinkable drinkable = HydrationHelper.getDrinkableData(stack);
+            Drinkable drinkable = SustinanceHelper.getDrinkableData(stack);
             this.drink(drinkable.getThirstModifier(stack), drinkable.getHydrationModifier(stack));
+            if (consumer instanceof ServerPlayer player) {
+                Sustinance.handler.sendTo(new ClientboundUpdateHydrationDataPacket(thirst, lastThirst, hydrationLevel), player);
+            }
         }
     }
 
@@ -63,7 +70,7 @@ public class BaseHydration implements Hydration {
 
     @Override
     public int addThirst(int thirst) {
-        this.lastThirst = this.thirst;
+        setLastThirst(this.thirst);
         return this.thirst = Math.min(Math.max(this.thirst + thirst, MIN_THIRST), MAX_THIRST);
     }
 
@@ -74,8 +81,12 @@ public class BaseHydration implements Hydration {
 
     @Override
     public void setThirst(int thirst) {
-        this.lastThirst = thirst;
-        this.thirst = Math.min(thirst, MAX_THIRST);
+        this.thirst = Math.min(Math.max(thirst, MIN_THIRST), MAX_THIRST);
+    }
+
+    @Override
+    public void setLastThirst(int lastThirst) {
+        this.lastThirst = Math.min(Math.max(lastThirst, MIN_THIRST), MAX_THIRST);;
     }
 
     @Override

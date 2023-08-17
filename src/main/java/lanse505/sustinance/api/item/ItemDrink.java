@@ -2,8 +2,8 @@ package lanse505.sustinance.api.item;
 
 import lanse505.sustinance.api.drinkable.BaseDrinkable;
 import lanse505.sustinance.api.drinkable.Drinkable;
-import lanse505.sustinance.api.hydration.Hydration;
-import lanse505.sustinance.api.hydration.HydrationHelper;
+import lanse505.sustinance.api.sustinance.SustinanceHelper;
+import lanse505.sustinance.api.sustinance.hydration.Hydration;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -15,6 +15,7 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public abstract class ItemDrink extends Item {
 
@@ -33,8 +34,8 @@ public abstract class ItemDrink extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
-        Hydration hydration = HydrationHelper.getHydrationData(player);
-        if (hydration.isThirsty()) return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(usedHand));
+        Optional<Hydration> hydration = SustinanceHelper.getHydration(player);
+        if (hydration.isPresent() && hydration.get().isThirsty()) return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(usedHand));
         return super.use(level, player, usedHand);
     }
 
@@ -51,10 +52,12 @@ public abstract class ItemDrink extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         if (!level.isClientSide() && livingEntity instanceof Player player) {
-           Hydration hydration = HydrationHelper.getHydrationData(player);
-           hydration.drink(this, stack, player);
-           onConsume(drinkable, stack, level, player);
-           return this.getCraftingRemainingItem(stack);
+           Optional<Hydration> hydration = SustinanceHelper.getHydration(player);
+           if (hydration.isPresent()) {
+               hydration.get().drink(this, stack, player);
+               onConsume(drinkable, stack, level, player);
+               return this.getCraftingRemainingItem(stack);
+           }
         }
         return super.finishUsingItem(stack, level, livingEntity);
     }

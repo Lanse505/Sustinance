@@ -15,9 +15,7 @@ public class SustinanceClient {
 
     public static void onClientSetup(FMLClientSetupEvent event)
     {
-        // Some client setup code
-        Sustinance.LOGGER.info("HELLO FROM CLIENT SETUP");
-        Sustinance.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
     }
 
 }
