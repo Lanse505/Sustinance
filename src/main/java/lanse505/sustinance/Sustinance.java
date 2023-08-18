@@ -11,34 +11,28 @@ import lanse505.sustinance.common.network.provider.SustinanceSafeSuppliers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fml.loading.FMLLoader;
 import org.slf4j.Logger;
 
 // TODO: Implement Nutrient/Hunger system
-// TODO: Implement Weight System
 // README: Any and all 'To-Do' objects should go on the base interface object for the relevant mechanic.
-// See: Hydration
+// See: lanse505.sustinance.api.sustinance.hydration.Hydration
 @Mod(Sustinance.MODID)
 public class Sustinance {
 
     public static final String MODID = "sustinance";
 
     public static final Logger LOGGER = LogUtils.getLogger();
-
     public static SustinanceCommonProxy proxy = DistExecutor.safeRunForDist(SustinanceSafeSuppliers.getClientProxy(), SustinanceSafeSuppliers.getServerProxy());
     public static SustinanceNetworkHandler handler = new SustinanceNetworkHandler();
 

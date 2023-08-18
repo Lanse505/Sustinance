@@ -11,6 +11,7 @@ import lanse505.sustinance.api.sustinance.weight.Weight;
 import lanse505.sustinance.client.RenderHelper;
 import lanse505.sustinance.common.network.SustinanceNetworkHandler;
 import lanse505.sustinance.common.network.packets.ClientboundUpdateHydrationDataPacket;
+import lanse505.sustinance.common.network.packets.ClientboundUpdateWeightDataPacket;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
@@ -98,7 +99,7 @@ public class GameplayHandler {
                 }
                 totalWeight += playerInventory.offhand.get(0).getCount();
                 weight.get().setWeight(totalWeight);
-                // TODO: Send Packet to update Weight Data
+                Sustinance.handler.sendTo(new ClientboundUpdateWeightDataPacket(totalWeight, weight.get().getMaxWeight()), (ServerPlayer) player);
             }
         }
     }

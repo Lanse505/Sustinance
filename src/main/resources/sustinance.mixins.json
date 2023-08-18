@@ -3,8 +3,6 @@
   "package": "lanse505.sustinance.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "sustinance.refmap.json",
-  "mixins": [
-
-  ],
+  "mixins": [],
   "minVersion": "0.8"
 }
